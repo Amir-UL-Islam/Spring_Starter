@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -8,17 +9,17 @@ import java.time.Month;
 import java.util.List;
 
 @Service
+//@Component
+//This Annotation will also work fine
 public class StudentService {
+    private final StudentRepository studentRepository;
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
     public List<Student> getStudent(){ // I changed the method name getStudents to getStudent
-    return List.of(
-            new Student(
-                        1L,
-                    "Amir",
-                    "to.whom.0@gmail.com",
-                    LocalDate.of(2000, Month.APRIL, 4),
-                    22
-            )
-    );
+    return studentRepository.findAll();
     }
 }
 // Passing the Values to Student Constructor
