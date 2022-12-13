@@ -21,5 +21,9 @@ public class StudentService {
     public List<Student> getStudent(){ // I changed the method name getStudents to getStudent
     return studentRepository.findAll();
     }
+
+    public void addNewStudent(Student student) {
+        System.out.println(student);
+    }
 }
 // Passing the Values to Student Constructor

@@ -22,7 +22,7 @@ public class StudentConfig {
             );
             Student Patel = new Student(
                     "Patel",
-                    "Patel@gmail.com",
+                    "patel@gmail.com",
                     LocalDate.of(2004, Month.APRIL, 4)
             );
             repository.saveAll(
