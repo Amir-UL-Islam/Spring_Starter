@@ -26,7 +26,7 @@ public class StudentController {
     // Adding NEW Data/Service to The Application or Database
 
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student){
+    public void registerNewStudent(@RequestBody Student student) throws IllegalAccessException {
         studentService.addNewStudent(student);
     }
 }
