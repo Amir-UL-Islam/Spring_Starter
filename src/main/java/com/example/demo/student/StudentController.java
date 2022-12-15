@@ -10,7 +10,7 @@ import java.time.Month;
 // This method Calls this Class as Rest Endpoint
 @RestController
 //	 REST EndPoint at localhost:8080/api/student
-@RequestMapping("api/student")
+@RequestMapping("api/v1/student")
 public class StudentController {
     private final StudentService studentService;// The studentService will be automatically Instantiate by @Autowired Annotation
 
