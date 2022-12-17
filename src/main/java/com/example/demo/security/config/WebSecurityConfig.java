@@ -23,14 +23,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        .cors().disable() [Temporarily Disable/Include]
 //        This line of code SO that we can SEND POST REQUEST without being Rejected.
 //        In the CASE of Form Based Application we should remove the code
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                    .antMatchers("api/v*/registration/**")
-                    .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin();
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("api/v*/registration/**")
+                .permitAll();
+//                .anyRequest()
+//                .authenticated().and();
+//                .formLogin();
 
     }
 
