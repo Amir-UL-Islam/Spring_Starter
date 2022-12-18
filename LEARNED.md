@@ -34,3 +34,61 @@ public class Main {
 
 ```
 - Constructor
+>### Facts About Spring Security
+
+- **1st** Thing the when Spring Security Apps Starts up **Spring Boot** Looks for an OBJECT called **SecurityFilterChain** Which is a @Bean Object.
+- By Navigating Through Spring Boot Declaration we can Find **SpringBootWebSecurityConfiguration.java** File
+ 
+#### Most of the time we need to overwrite this Method
+
+
+```
+    @Bean
+	@Order(SecurityProperties.BASIC_AUTH_ORDER)
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeRequests().anyRequest().authenticated();
+		http.formLogin();
+		http.httpBasic();
+		return http.build();
+	}
+```
+>#### How Basic Auth Works
+![Basic Auth](/home/aiokleo/demo/ImageNotes/auth.png)
+
+>### @Transaction
+> This Annotation is used to Prevent Entry of **Irrational Data in DB**.
+> > A scenario Could be
+> 
+> >Situation One
+> >>Let's Say A probable passengers Entered his/her Name, Birthday, Destination to Form One And Payment Details, Address to Another Form.
+> 
+> > Situation Two
+> >> For Some Reason Paint Failed.
+> 
+> > Situation Three
+> >> The Personal Information is already in the DB.
+> 
+>>> **Question is What would we Do with His/her Personal Details.**
+> 
+> >> Delete it. But How ??? 
+> 
+> >Solution
+> >> Here Comes the **@Transaction**
+
+
+>### File Structure
+> >For JPA
+> >>- One file for Entity(**Structure/Model Declaration of Database**). In This case **AppUser.java** file
+> >>- One file for Repository(**Process of giving the Entry in DB**) Which **implements** the **JpaRepository** alon with primary key. Here **AppUserRepository.java** an Interface
+ ```java
+@Repository
+public interface ConformationTokenRepository extends JpaRepository<ConformationToken, Long> {
+Optional<ConformationToken> findByToken(String token);
+}
+```
+> >>- One For Request(Which will Request Data From DB) Here it's called **RegistrationRequest.java**
+> >>- One file for Service(all **business logic, end results, data showcase from database**)
+> >>>In This case we have 2 Services.
+> >>>> - *RegistrationService.java* (***Which will Get Data from Probable Future User if He/She not already present in the DB***)
+> >>>> - *AppUserService.java* (**Which will Validate User and Send a Email to the Probable Future Email Address**)
+

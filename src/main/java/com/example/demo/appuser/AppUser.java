@@ -28,10 +28,13 @@ public class AppUser implements UserDetails {
             strategy = GenerationType.SEQUENCE, // Generating values for Sequence WE CREATED.
             generator = "app_user_sequence"
     )
+    @Column(nullable = false)
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING) // For Enums
     private AppUserRoll appUserRoll;
