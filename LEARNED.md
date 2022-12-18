@@ -53,7 +53,7 @@ public class Main {
 	}
 ```
 >#### How Basic Auth Works
-![Basic Auth](/home/aiokleo/demo/ImageNotes/auth.png)
+![Basic Auth](./ImageNotes/auth.png)
 
 >### @Transaction
 > This Annotation is used to Prevent Entry of **Irrational Data in DB**.
