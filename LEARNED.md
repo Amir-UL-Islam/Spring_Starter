@@ -92,3 +92,6 @@ Optional<ConformationToken> findByToken(String token);
 > >>>> - *RegistrationService.java* (***Which will Get Data from Probable Future User if He/She not already present in the DB***)
 > >>>> - *AppUserService.java* (**Which will Validate User and Send a Email to the Probable Future Email Address**)
 
+### ```toString()```
+#### The toString method is used to return a string representation of an object. 
+
