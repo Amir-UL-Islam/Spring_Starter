@@ -25,8 +25,22 @@ public class StudentController {
     }
     // Adding NEW Data/Service to The Application or Database
 
-    @PostMapping
+    @PostMapping // Here @RequestBody will Convert the JSON Data to Java Object (mapping into Student) format
     public void registerNewStudent(@RequestBody Student student) throws IllegalAccessException {
         studentService.addNewStudent(student);
+    }
+
+
+    @DeleteMapping(path = "{id}")
+    public void deleteStudent(@PathVariable("id") Long id){
+        studentService.deleteStudent(id);
+    }
+
+    @PutMapping(path = "{id}")
+    public void updateStudent(
+            @PathVariable("id") Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email){
+        studentService.updateStudent(id, name, email);
     }
 }

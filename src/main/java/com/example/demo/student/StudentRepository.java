@@ -13,5 +13,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 //    JDQL
 //    @Query("SELECT s FROM Student s WHERE s.email = ?1")
     Optional<Student> findStudentByEmail(String email); // This line will Transform into a SQL query (SELECT * FROM Student WHERE email = ?;)
+    Optional<Student> findByName(String name);
 
 }

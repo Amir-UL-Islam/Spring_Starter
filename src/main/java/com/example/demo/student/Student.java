@@ -9,6 +9,7 @@ import java.time.Period;
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor
 @Entity(name = "Student") // For Hibernate
 @Table(
@@ -60,6 +61,13 @@ public class Student {
     @Transient
     private Integer age;
 
+    public Integer getAge() {
+        return Period.between(this.dob, LocalDate.now()).getYears();
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     public Student(Long id,
                    String name,
@@ -79,14 +87,4 @@ public class Student {
         this.dob = dob;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", age=" + age +
-                '}';
-    }
 }

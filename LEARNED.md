@@ -95,3 +95,5 @@ Optional<ConformationToken> findByToken(String token);
 ### ```toString()```
 #### The toString method is used to return a string representation of an object. 
 
+>### ```@RequestParams``` vs ```@PathVariable```
+> >#### ```@RequestParams``` extract values from the query string, ```@PathVariables``` extract values from the URI path
