@@ -1,10 +1,11 @@
-package com.example.demo.registration;
+package com.example.demo.entities;
 
 import lombok.*;
 
 
 @Getter
 // Things are already Set in AppUser.java file. So, we Don't Need @Setter
+@Setter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString

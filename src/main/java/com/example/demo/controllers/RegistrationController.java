@@ -1,7 +1,8 @@
-package com.example.demo.registration;
+package com.example.demo.controllers;
 
+import com.example.demo.entities.RegistrationRequest;
+import com.example.demo.services.RegistrationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +21,7 @@ public class RegistrationController {
     }
 
     @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
+    public String confirmUserToken(@RequestParam("token") String token) {
         return registrationService.confirmToken(token); // confirmToken Method is a Transactional
     }
 }

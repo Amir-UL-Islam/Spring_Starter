@@ -1,5 +1,6 @@
-package com.example.demo.email;
+package com.example.demo.services;
 
+import com.example.demo.repositories.EmailSender;
 import lombok.AllArgsConstructor;
 //import org.aspectj.bridge.MessageHandler;
 //import org.hibernate.pretty.MessageHelper;
@@ -20,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
-public class EmailService implements EmailSender{
+public class EmailService implements EmailSender {
     // This LoggerFactory will RETURN any log/logs in the Console
     // So, What's Difference between System.out.print(errorMessage);
     // The slf4j interface dose make sense HERE

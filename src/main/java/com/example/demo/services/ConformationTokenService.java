@@ -1,5 +1,7 @@
-package com.example.demo.registration.token;
+package com.example.demo.services;
 
+import com.example.demo.entities.ConformationToken;
+import com.example.demo.repositories.ConformationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +17,16 @@ public class ConformationTokenService {
     public void saveConformationToken(ConformationToken token){
         // Saving the tokens into DB
         conformationTokenRepository.save(token);
-
     }
+
+
     // Getting the Token (if any in DB between Times)
     public Optional<ConformationToken> getToken(String token) {
         return conformationTokenRepository.findByToken(token);
     }
-    // TODO:
-    //??
+
+
+
     public int setConfirmedAt(String token) {
         return conformationTokenRepository.updateConfirmedAt(
                 token, LocalDateTime.now()); // Passing the Confirmed Time as LocalDateTime.now()

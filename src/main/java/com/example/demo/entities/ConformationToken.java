@@ -1,6 +1,6 @@
-package com.example.demo.registration.token;
+package com.example.demo.entities;
 
-import com.example.demo.appuser.AppUser;
+import com.example.demo.entities.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,13 +17,15 @@ public class ConformationToken {
     @SequenceGenerator(
             name = "conformation_token_sequence",
             sequenceName = "conformation_token_sequence",
-            allocationSize = 1 // This 1 is to INCREMENT/AutoGenerate ID by 1. FOR EXAMPLE: 1, 2, 3, 4 ...
+            allocationSize = 1
     )
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE, // Generating values for Sequence WE CREATED.
+            strategy = GenerationType.SEQUENCE,
             generator = "conformation_token_sequence"
     )
-    @Column(nullable = false)
+    @Column(
+            nullable = false
+    )
     private Long id;
     private String token;
     private LocalDateTime tokenCreatedAt;
@@ -42,11 +44,11 @@ public class ConformationToken {
     public ConformationToken(String token,
                              LocalDateTime tokenCreatedAt,
                              LocalDateTime tokenExpiredAt,
-//                             LocalDateTime confirmedAt,
                              AppUser appUser) {
         this.token = token;
         this.tokenCreatedAt = tokenCreatedAt;
         this.tokenExpiredAt = tokenExpiredAt;
+        // will be set when the user click on the link.
 //        this.confirmedAt = confirmedAt;
         this.appUser = appUser;
     }

@@ -1,4 +1,4 @@
-package com.example.demo.appuser;
+package com.example.demo.controllers;
 
 public enum AppUserRoll {
     USER,

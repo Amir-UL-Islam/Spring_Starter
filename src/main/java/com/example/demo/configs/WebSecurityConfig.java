@@ -1,6 +1,6 @@
-package com.example.demo.security.config;
+package com.example.demo.configs;
 
-import com.example.demo.appuser.AppUserService;
+import com.example.demo.services.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,19 +23,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        .cors().disable() [Temporarily Disable/Include]
 //        This line of code SO that we can SEND POST REQUEST without being Rejected.
 //        In the CASE of Form Based Application we should remove the code
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
                     .antMatchers("api/v*/registration/**")
-                    .permitAll();
-//                .anyRequest()
-//                .authenticated().and()
-//                .formLogin();
+                    .permitAll()
+                .anyRequest()
+                .authenticated().and()
+                .formLogin();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.authenticationProvider(daoAuthenticationProvider());
     }
+
+    // Password Encryption
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){

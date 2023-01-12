@@ -1,14 +1,13 @@
-package com.example.demo.registration;
+package com.example.demo.services;
 
-import com.example.demo.appuser.AppUser;
-import com.example.demo.appuser.AppUserRepository;
-import com.example.demo.appuser.AppUserRoll;
-import com.example.demo.appuser.AppUserService;
-import com.example.demo.email.EmailSender;
-import com.example.demo.registration.token.ConformationToken;
-import com.example.demo.registration.token.ConformationTokenService;
+import com.example.demo.repositories.EmailSender;
+import com.example.demo.entities.AppUser;
+import com.example.demo.validations.EmailValidator;
+import com.example.demo.entities.RegistrationRequest;
+import com.example.demo.repositories.AppUserRepository;
+import com.example.demo.controllers.AppUserRoll;
+import com.example.demo.entities.ConformationToken;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +22,18 @@ public class RegistrationService {
     private final ConformationTokenService conformationTokenService;
 
     private final EmailSender emailSender;
+
+
     // Checking -> Either the New user Email/User Present or Not
     public String register(RegistrationRequest request) throws IllegalAccessException {
+        // Validating the Emails with Regex
         boolean isValid = emailValidator.test(request.getEmail());
         if (!isValid){
             throw new IllegalAccessException("Email Not Valid");
         }
+
         // Sending New User Information to DB. by -> AppUserService Logics
+
         // Creating Token
         String token = appUserService.signUpUser(
                 new AppUser(
@@ -40,6 +44,8 @@ public class RegistrationService {
                         AppUserRoll.USER
                 )
         );
+
+
         // Creating link
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
 
@@ -48,7 +54,7 @@ public class RegistrationService {
         return token;
     }
     // Confirming Token And also Validating Data Before Inserting to DB
-    @Transactional
+    @Transactional // all or nothing
     public String confirmToken(String token){
         // Searching the Token
         ConformationToken conformationToken = conformationTokenService.getToken(token)
@@ -65,7 +71,9 @@ public class RegistrationService {
             throw new IllegalStateException("Sorry! Times up. Token Expired");
         }
 
+        // Setting the ConfirmedAt to Current Time
         conformationTokenService.setConfirmedAt(token);
+
         appUserService.enableAppUser(
                 conformationToken.getAppUser().getEmail());
 
@@ -76,7 +84,7 @@ public class RegistrationService {
 
     // EmailBuilder
     private String buildEmail(String name, String link) {
-        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0c0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
                 "\n" +
@@ -131,7 +139,7 @@ public class RegistrationService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 30 minutes. <p>See you soon</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

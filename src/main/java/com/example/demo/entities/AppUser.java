@@ -1,5 +1,6 @@
-package com.example.demo.appuser;
+package com.example.demo.entities;
 
+import com.example.demo.controllers.AppUserRoll;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,11 +33,19 @@ public class AppUser implements UserDetails {
     private Long id;
     private String firstname;
     private String lastname;
-    @Column(nullable = false)
+    @Column(
+            nullable = false
+    )
     private String email;
-    @Column(nullable = false)
+    @Column(
+            nullable = false
+    )
     private String password;
-    @Enumerated(EnumType.STRING) // For Enums
+
+
+    @Enumerated(
+            EnumType.STRING
+    ) // For Enums
     private AppUserRoll appUserRoll;
     private Boolean locked = false;
     private Boolean enable = false;
@@ -54,7 +63,8 @@ public class AppUser implements UserDetails {
         this.appUserRoll = appUserRoll;
     }
 
-
+// GrantedAuthority as being a "permission" or a "right". Those "permissions" are (normally) expressed as strings (with the getAuthority() method).
+// Those strings let you identify the permissions and let your voters decide if they grant access to something.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRoll.name());
@@ -86,7 +96,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !locked;
     }
 
     @Override
@@ -96,6 +106,6 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enable;
     }
 }
