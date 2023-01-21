@@ -38,7 +38,7 @@ public class AppUserService implements UserDetailsService {
         boolean Present = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
 
         if(Present){
-            throw new IllegalAccessException("Already Exist");
+            throw new IllegalAccessException("Email Already Exist");
         }
 
         // Encoding the Password and Storing it to DB

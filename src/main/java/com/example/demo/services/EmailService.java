@@ -38,7 +38,7 @@ public class EmailService implements EmailSender {
             messageHelper.setText(email, true);
             messageHelper.setTo(to);
             messageHelper.setSubject("Confirm Your Token");
-            messageHelper.setFrom("Amir@message.com");
+            messageHelper.setFrom("someone@message.com");
 
             // Sending the Mail
             mailSender.send(mimeMessage);
