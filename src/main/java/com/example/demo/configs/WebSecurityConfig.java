@@ -4,11 +4,13 @@ import com.example.demo.services.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -24,12 +26,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        This line of code SO that we can SEND POST REQUEST without being Rejected.
 //        In the CASE of Form Based Application we should remove the code
         http
-                .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .antMatchers("api/v*/registration/**")
-                    .permitAll()
-                .anyRequest()
-                .authenticated().and()
+                .antMatchers("api/v1/registration/**").permitAll()
+                .antMatchers("api/v1/student/").authenticated()
+                .and()
+                .httpBasic()
+                .realmName("Demo")
+                .and()
+                .csrf().disable()
                 .formLogin();
     }
 
